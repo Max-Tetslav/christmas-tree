@@ -1,0 +1,24 @@
+.header{
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(0,0,0,1) 100%);
+}
+
+.menu__list{
+  max-width: 400px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 0 10px;
+  color: #ffffff;
+}
+
+.menu__list__item__link{
+  font-family: 'Caveat', cursive;
+  font-size: 34px;
+}
+
+.menu__list__item__link__img{
+  width: 61px;
+  height: 61px;
+}
