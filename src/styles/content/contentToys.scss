@@ -1,16 +1,17 @@
+@import './filter.scss';
+
 .content-root{
   display: flex;
+  justify-content: space-around;
   height: 75vh;
-}
-
-.filter-container{
-  width: 30vw;
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
 }
 
 .toys-container{
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
   width: 65vw;
   overflow: auto;
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
 	scrollbar-width: none;  /* Firefox */
 }
 
@@ -19,10 +20,10 @@
 }
 
 .toys-container__top{
-
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: white;
 }
 
 .toys-root{
@@ -39,14 +40,35 @@
   align-items: center;
   width: 220px;
   height: 340px;
-  border-radius: 20px;
   color: white;
-  cursor: pointer;
   background: radial-gradient(circle, rgba(89, 99, 131, 0.001) 0%, rgba(162,186,255,0.001) 100%);
   backdrop-filter: blur(3px);
   border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.toy-favourites{
+  border: 2px solid gold;
+  box-shadow: 0px 0px 10px 1px gold;
 }
 
 .toy__img{
-  height: 105px;
+  height: 100px;
+}
+
+.favourites-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px;
+}
+
+.favourites-text{
+  position: absolute;
+  left: 12px;
+  color: #000000;
 }

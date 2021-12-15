@@ -1,130 +1,229 @@
-import Data from "../controller/loader";
-import Itoy from "../interfaces/Itoy";
-import Toy from "./components/Toy";
+import { target } from 'nouislider';
+import Data from '../controller/loader';
+import renderToys from '../interfaces/renderToys';
+import ToyList from '../interfaces/ItoyList';
+import Ifilter from '../interfaces/Ifilter';
+import createSlider from './components/UiSlider';
+import cone from './components/svg/cone';
+import snowflake from './components/svg/snowflake';
+import bell from './components/svg/bell';
+import ballShape from './components/svg/ballShape';
+import figure from './components/svg/figure';
+import star from './components/svg/star';
+import favourites from './components/svg/favourites';
 
 const Toys = {
   render: async () => {
     const view = `
     <form class="filter-container" action="#">
+      <div class="favourites-container">
+      <span class="favourites-text">20</span>
+      ${favourites}
+      </div>
       <fieldset class="filter-container__top">
-        <button class="soundToggle"></button>
-        <input class="search" type="search" name="search" id="search">
+        <button class="soundToggle" type="button"></button>
+        <div class="search-container">
+          <div class="search-container__input-container">
+            <input class="search-container__input-container__search" type="text" placeholder="Поиск" autocomplete="off" autocorrect="off" name="search" id="search">
+          </div>
+          <span class="search-container__input-container__clear-search"></span>
+        </div>
       </fieldset>
-      <fieldset class="filter-container__favourite">
-        <legend class="favourite-text" for="favourite">Только любимое</legend>
-        <input class="favourite" type="checkbox" name="favourite" id="favourite">
+      <fieldset class="filter-container__favourite flex-fieldset">
+        <legend class="favourite-text legend-hide" for="favourite">Только любимое</legend>
+        <h3>Только любимые:</h3>
+        <label class="favorite-label">
+          <input class="favorite" type="checkbox" name="favourite" id="favorite">
+          <span></span>
+        </label>
       </fieldset>
-      <fieldset class="filter-container__sort">
-        <legend for="sort">Сортировать</legend>
-        <select class="sort" name="sort" id="sort" >
-          <option class="sort__item" value="name-up">По названию А-Я</option>
-          <option class="sort__item" value="name-down">По названию Я-А</option>
-          <option class="sort__item" value="quantity-up">Колличество по убыванию</option>
-          <option class="sort__item" value="quantity-down">Колличество по возрастанию</option>
-        </select>
+      <fieldset class="filter-container__sort flex-fieldset">
+        <legend class="legend-hide" for="sort">Сортировать</legend>
+        <h3>Сортировать:</h3>
+        <div class="sort-container">
+          <select class="sort" name="sort" id="sort" >
+            <option class="sort__item" value="name-up">По названию А-Я</option>
+            <option class="sort__item" value="name-down">По названию Я-А</option>
+            <option class="sort__item" value="count-down">По убыванию экземпляров</option>
+            <option class="sort__item" value="count-up">По возрастанию экземпляров</option>
+          </select>
+        </div>
       </fieldset>
-      <fieldset class="filter-container__shape">
-        <legend class="shape-title">Форма</legend>
+      <fieldset class="filter-container__shape flex-fieldset">
+        <legend class="shape-title legend-hide">Форма</legend>
+        <h3>Форма:</h3>
         <div class="shape-group">
-          <label class="shape-name" for="bell">Колокол</label>
+          <label class="shape-name" for="bell">${bell}</label>
           <input class="shape-toggle" type="checkbox" name="bell" id="bell">
-          <label class="shape-name" for="ball">Шар</label>
+          <label class="shape-name" for="ball">${ballShape}</label>
           <input class="shape-toggle" type="checkbox" name="ball" id="ball">
-          <label class="shape-name" for="pinecone">Шишка</label>
+          <label class="shape-name" for="pinecone">${cone}</label>
           <input class="shape-toggle" type="checkbox" name="pinecone" id="pinecone">
-          <label class="shape-name" for="star">Звезда</label>
+          <label class="shape-name" for="star">${star}</label>
           <input class="shape-toggle" type="checkbox" name="star" id="star">
-          <label class="shape-name" for="snowflake">Снежинка</label>
+          <label class="shape-name" for="snowflake">${snowflake}</label>
           <input class="shape-toggle" type="checkbox" name="snowflake" id="snowflake">
-          <label class="shape-name" for="figure">Фигурка</label>
+          <label class="shape-name" for="figure">${figure}</label>
           <input class="shape-toggle" type="checkbox" name="figure" id="figure">
         </div>
       </fieldset>
-      <fieldset class="filter-container__size">
-        <legend class="size-title">Размер</legend>
-        <label class="size-name" for="big">Большой</label>
+      <fieldset class="filter-container__size flex-fieldset">
+        <legend class="size-title legend-hide">Размер</legend>
+        <h3>Размер:</h3>
+        <label class="size-name" for="big">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 64 64">
+            <title>ball</title>
+            <path class="size-svg" fill="#fff" d="M29.497 1.563c-1.909 1.299-2.423 3.488-1.318 5.608l0.537 1.030-2.841 0.675 0.042 2.91 0.042 2.91-1.417 0.398c-12.864 3.615-20.517 18.273-16.255 31.131 4.945 14.918 21.4 21.389 35.833 14.090 2.271-1.148 6.218-4.797 7.7-7.119 0.502-0.786 1.145-1.662 1.43-1.947s0.456-0.618 0.38-0.741-0.027-0.292 0.109-0.377c0.563-0.348 1.706-3.76 2.39-7.132 2.341-11.544-5.597-24.613-16.928-27.868l-1.423-0.409-0.009-2.898c-0.011-3.354 0.129-3.015-1.364-3.294-1.509-0.282-1.531-0.313-0.92-1.315 2.249-3.688-2.411-8.088-5.988-5.653zM33.49 2.12c2.041 1.056 2.382 3.771 0.699 5.567-0.779 0.832-3.857 0.832-4.615 0-2.784-3.057 0.297-7.439 3.916-5.567z"></path>
+          </svg>
+        </label>
         <input class="size-toggle" type="checkbox" name="big" id="big">
-        <label class="size-name" for="medium">Средний</label>
+        <label class="size-name" for="medium">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="46" height="46" viewBox="0 0 64 64">
+            <title>ball</title>
+            <path class="size-svg" fill="#fff" d="M29.497 1.563c-1.909 1.299-2.423 3.488-1.318 5.608l0.537 1.030-2.841 0.675 0.042 2.91 0.042 2.91-1.417 0.398c-12.864 3.615-20.517 18.273-16.255 31.131 4.945 14.918 21.4 21.389 35.833 14.090 2.271-1.148 6.218-4.797 7.7-7.119 0.502-0.786 1.145-1.662 1.43-1.947s0.456-0.618 0.38-0.741-0.027-0.292 0.109-0.377c0.563-0.348 1.706-3.76 2.39-7.132 2.341-11.544-5.597-24.613-16.928-27.868l-1.423-0.409-0.009-2.898c-0.011-3.354 0.129-3.015-1.364-3.294-1.509-0.282-1.531-0.313-0.92-1.315 2.249-3.688-2.411-8.088-5.988-5.653zM33.49 2.12c2.041 1.056 2.382 3.771 0.699 5.567-0.779 0.832-3.857 0.832-4.615 0-2.784-3.057 0.297-7.439 3.916-5.567z"></path>
+          </svg>
+        </label>
         <input class="size-toggle" type="checkbox" name="medium" id="medium">
-        <label class="size-name" for="small">Маленький</label>
+        <label class="size-name" for="small">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 64 64">
+            <title>ball</title>
+            <path class="size-svg" fill="#fff" d="M29.497 1.563c-1.909 1.299-2.423 3.488-1.318 5.608l0.537 1.030-2.841 0.675 0.042 2.91 0.042 2.91-1.417 0.398c-12.864 3.615-20.517 18.273-16.255 31.131 4.945 14.918 21.4 21.389 35.833 14.090 2.271-1.148 6.218-4.797 7.7-7.119 0.502-0.786 1.145-1.662 1.43-1.947s0.456-0.618 0.38-0.741-0.027-0.292 0.109-0.377c0.563-0.348 1.706-3.76 2.39-7.132 2.341-11.544-5.597-24.613-16.928-27.868l-1.423-0.409-0.009-2.898c-0.011-3.354 0.129-3.015-1.364-3.294-1.509-0.282-1.531-0.313-0.92-1.315 2.249-3.688-2.411-8.088-5.988-5.653zM33.49 2.12c2.041 1.056 2.382 3.771 0.699 5.567-0.779 0.832-3.857 0.832-4.615 0-2.784-3.057 0.297-7.439 3.916-5.567z"></path>
+          </svg>
+        </label>
         <input class="size-toggle" type="checkbox" name="small" id="small">
       </fieldset>
-      <fieldset class="filter-container__color">
-        <legend class="color-title">Цвет</legend>
-        <input class="color" type="checkbox" name="white" id="white">
-        <input class="color" type="checkbox" name="yellow" id="yellow">
-        <input class="color" type="checkbox" name="red" id="red">
-        <input class="color" type="checkbox" name="blue" id="blue">
-        <input class="color" type="checkbox" name="green" id="green">
+      <fieldset class="filter-container__color flex-fieldset">
+        <legend class="color-title legend-hide">Цвет</legend>
+        <h3>Цвет:</h3>
+        <label class="color-label">
+          <input class="color" type="checkbox" name="white" id="white">
+          <span></span>
+        </label>
+        <label class="color-label">
+          <input class="color" type="checkbox" name="yellow" id="yellow">
+          <span></span>
+        </label>
+        <label class="color-label">
+          <input class="color" type="checkbox" name="red" id="red">
+          <span></span>
+        </label>
+        <label class="color-label">
+          <input class="color" type="checkbox" name="blue" id="blue">
+          <span></span>
+        </label>
+        <label class="color-label">
+          <input class="color" type="checkbox" name="green" id="green">
+          <span></span>
+        </label>
       </fieldset>
-      <fieldset class="filter-container__quantity">
-        <legend class="quantity-title">Колличество экземпляров</legend>
-        <input class="quantity-range" type="range" name="" id="">
+      <fieldset class="filter-container__count">
+        <legend class="count-title">Колличество экземпляров</legend>
+        <span>1</span>
+        <div class="count-range range" id="count-range"></div>
+        <span>12</span>
       </fieldset>
       <fieldset class="filter-container__year">
         <legend class="year-title">Год приобретения</legend>
-        <input class="year-range" type="range" name="" id="">
+        <span>1940</span>
+        <div class="year-range range" id="year-range"></div>
+        <span>2021</span>
       </fieldset>
       <fieldset class="filter-container__buttons">
-        <button class="filter-submit">Применить</button>
-        <button class="filter-reset">Сбросить</button>
+        <button class="reset" type="button">Сбросить</button>
       </fieldset>
     </form>
     <section class="toys-container">
-      <div class="toys-container__top">
-        <h1 class="toy-title">Игрушки</h1>
-        <div class="favourites">
-          <img src="" alt="" class="favourites__img">
-          <span class="favourites__counter">20</span>
-        </div>
-      </div>
+      
       <div class="toys-root">
     
       </div>
     </section>
     `;
 
-  //   <div class="toy">
-  //   <h3 class="toy__name toy-root"></h3>
-  //   <img class="toy__img" src="" alt="" >
-  //   <p class="toy__quantity">Колличество:</p>
-  //   <span class="toy__quntity-root toy-root"></span>
-  //   <p class="toy__year">Год покупки:</p>
-  //   <span class="toy__year-root toy-root"></span>
-  //   <p class="toy__shape">Форма:</p>
-  //   <span class="toy__shape-root toy-root"></span>
-  //   <p class="toy__color">Цвет:</p>
-  //   <span class="toy__color-root toy-root"></span>
-  //   <p class="toy__size">Размер:</p>
-  //   <span class="toy__size-root toy-root"></span>
-  //   <p class="toy__favourite">Любимая:</p>
-  //   <span class="toy__favourite-root toy-root"></span>
-  // </div>
-
     return view;
   },
   after_render: async () => {
+    const yearsRange = document.querySelector('#year-range')!;
+    const countRange = document.querySelector('#count-range')!;
 
-    const data: Array<Itoy> = await Data.getData('./assets/data.json');
+    createSlider(yearsRange as target, 1940, 2021, 10);
+    createSlider(countRange as target, 1, 12, 1);
+
+    const data: ToyList = await Data.getData('./assets/data.json');
+    const endData: ToyList = data;
     const toysRoot = document.querySelector('.toys-root')!;
 
+    const toySizeSvg = [...document.querySelectorAll('.size-svg')!];
+    const toyShapeSvg = [...document.querySelectorAll('.shape-svg')!];
 
-    data.map(item => {
-      let toy = new Toy(
-        item.color,
-        item.count,
-        item.favourite,
-        item.name,
-        item.num,
-        item.shape,
-        item.size,
-        item.year,
-      );
+    toySizeSvg.map((item) =>
+      item.addEventListener('click', () => {
+        item.classList.toggle('size-svg_selected');
+      }),
+    );
 
-      toysRoot.innerHTML += toy.render();
+    toyShapeSvg.map((item) =>
+      item.addEventListener('click', () => {
+        item.classList.toggle('size-svg_selected');
+      }),
+    );
+
+    const sortInput: HTMLSelectElement = document.querySelector('.sort')!;
+    const filterFavourite = document.querySelector('.favorite')!;
+    let selectedValue = sortInput.selectedOptions[0].value;
+
+    const filter: Ifilter = {};
+
+    sortInput.addEventListener('input', () => {
+      selectedValue = sortInput.selectedOptions[0].value;
+      filter.sort = sortInput.selectedOptions[0].value;
+
+      let newData: ToyList = endData;
+      switch (selectedValue) {
+        case 'name-up':
+          newData = endData.sort((a, b) => {
+            if (a.name > b.name) {
+              return 1;
+            }
+            if (b.name > a.name) {
+              return -1;
+            }
+            return 0;
+          });
+          break;
+        case 'name-down':
+          newData = endData.sort((a, b) => {
+            if (b.name > a.name) {
+              return 1;
+            }
+            if (a.name > b.name) {
+              return -1;
+            }
+            return 0;
+          });
+          break;
+        case 'count-up':
+          newData = endData.sort((a, b) => Number(a.count) - Number(b.count));
+          break;
+        case 'count-down':
+          newData = endData.sort((a, b) => Number(b.count) - Number(a.count));
+          break;
+        default:
+          break;
+      }
+
+      toysRoot.innerHTML = '';
+      renderToys(newData, toysRoot);
     });
 
-    
+    filterFavourite.addEventListener('input', () => {
+      const newData = endData.filter((item) => item.favorite === true);
+
+      toysRoot.innerHTML = '';
+      renderToys(newData, toysRoot);
+    });
+
+    renderToys(endData, toysRoot);
   },
 };
 

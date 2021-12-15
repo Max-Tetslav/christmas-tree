@@ -1,12 +1,20 @@
-class Toy{
+class Toy {
   color: string;
+
   count: string;
+
   favourite: boolean;
+
   name: string;
+
   num: string;
+
   shape: string;
+
   size: string;
+
   year: string;
+
   constructor(
     color: string,
     count: string,
@@ -16,7 +24,7 @@ class Toy{
     shape: string,
     size: string,
     year: string,
-    ){
+  ) {
     this.color = color;
     this.count = count;
     this.favourite = favourite;
@@ -27,7 +35,7 @@ class Toy{
     this.year = year;
   }
 
-  render(){
+  render() {
     return `
     <div class="toy">
       <h3 class="toy__name toy-root">${this.name}</h3>
@@ -51,7 +59,7 @@ class Toy{
         <span class="toy__favourite-root toy-root">${this.favourite ? 'Да' : 'Нет'}</span>
       </p>
     </div>
-    `
+    `;
   }
 }
 

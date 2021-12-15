@@ -1,9 +1,9 @@
-interface Itoy{
+interface Itoy {
   color: string;
   count: string;
-  favourite: boolean;
+  favorite: boolean;
   name: string;
-  num:string;
+  num: string;
   shape: string;
   size: string;
   year: string;
