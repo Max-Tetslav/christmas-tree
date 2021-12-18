@@ -1,6 +1,6 @@
 import { target } from 'nouislider';
 import Data from '../controller/loader';
-import renderToys from '../interfaces/renderToys';
+import renderToys from '../controller/renderToys';
 import ToyList from '../interfaces/ItoyList';
 import Ifilter from '../interfaces/Ifilter';
 import createSlider from './components/UiSlider';
@@ -9,8 +9,9 @@ import snowflake from './components/svg/snowflake';
 import bell from './components/svg/bell';
 import ballShape from './components/svg/ballShape';
 import figure from './components/svg/figure';
-import star from './components/svg/star';
 import favourites from './components/svg/favourites';
+import filterData from '../controller/filter/filterToys';
+import sortToys from '../controller/filter/sort';
 
 const Toys = {
   render: async () => {
@@ -59,8 +60,6 @@ const Toys = {
           <input class="shape-toggle" type="checkbox" name="ball" id="ball">
           <label class="shape-name" for="pinecone">${cone}</label>
           <input class="shape-toggle" type="checkbox" name="pinecone" id="pinecone">
-          <label class="shape-name" for="star">${star}</label>
-          <input class="shape-toggle" type="checkbox" name="star" id="star">
           <label class="shape-name" for="snowflake">${snowflake}</label>
           <input class="shape-toggle" type="checkbox" name="snowflake" id="snowflake">
           <label class="shape-name" for="figure">${figure}</label>
@@ -96,23 +95,23 @@ const Toys = {
         <legend class="color-title legend-hide">Цвет</legend>
         <h3>Цвет:</h3>
         <label class="color-label">
-          <input class="color" type="checkbox" name="white" id="white">
+          <input class="color-toggle" type="checkbox" name="white" id="white">
           <span></span>
         </label>
         <label class="color-label">
-          <input class="color" type="checkbox" name="yellow" id="yellow">
+          <input class="color-toggle" type="checkbox" name="yellow" id="yellow">
           <span></span>
         </label>
         <label class="color-label">
-          <input class="color" type="checkbox" name="red" id="red">
+          <input class="color-toggle" type="checkbox" name="red" id="red">
           <span></span>
         </label>
         <label class="color-label">
-          <input class="color" type="checkbox" name="blue" id="blue">
+          <input class="color-toggle" type="checkbox" name="blue" id="blue">
           <span></span>
         </label>
         <label class="color-label">
-          <input class="color" type="checkbox" name="green" id="green">
+          <input class="color-toggle" type="checkbox" name="green" id="green">
           <span></span>
         </label>
       </fieldset>
@@ -129,7 +128,7 @@ const Toys = {
         <span>2021</span>
       </fieldset>
       <fieldset class="filter-container__buttons">
-        <button class="reset" type="button">Сбросить</button>
+        <button class="reset" type="button" id="reset-filter">Сбросить</button>
       </fieldset>
     </form>
     <section class="toys-container">
@@ -150,9 +149,10 @@ const Toys = {
     createSlider(countRange as target, 1, 12, 1);
 
     const data: ToyList = await Data.getData('./assets/data.json');
-    const endData: ToyList = data;
+    let endData: ToyList = data;
     const toysRoot = document.querySelector('.toys-root')!;
 
+    // TODO переделать для инпутов ===================================
     const toySizeSvg = [...document.querySelectorAll('.size-svg')!];
     const toyShapeSvg = [...document.querySelectorAll('.shape-svg')!];
 
@@ -161,66 +161,80 @@ const Toys = {
         item.classList.toggle('size-svg_selected');
       }),
     );
-
     toyShapeSvg.map((item) =>
       item.addEventListener('click', () => {
         item.classList.toggle('size-svg_selected');
       }),
     );
+    // =============================================================
 
-    const sortInput: HTMLSelectElement = document.querySelector('.sort')!;
+    sortToys(endData);
+
+    const defaultFilters: Ifilter = {
+      favorite: null,
+      shape: {},
+      size: {},
+      color: {},
+      countRange: null,
+      yearRange: null,
+    };
+    const filterOptions: Ifilter = defaultFilters;
+
     const filterFavourite = document.querySelector('.favorite')!;
-    let selectedValue = sortInput.selectedOptions[0].value;
-
-    const filter: Ifilter = {};
-
-    sortInput.addEventListener('input', () => {
-      selectedValue = sortInput.selectedOptions[0].value;
-      filter.sort = sortInput.selectedOptions[0].value;
-
-      let newData: ToyList = endData;
-      switch (selectedValue) {
-        case 'name-up':
-          newData = endData.sort((a, b) => {
-            if (a.name > b.name) {
-              return 1;
-            }
-            if (b.name > a.name) {
-              return -1;
-            }
-            return 0;
-          });
-          break;
-        case 'name-down':
-          newData = endData.sort((a, b) => {
-            if (b.name > a.name) {
-              return 1;
-            }
-            if (a.name > b.name) {
-              return -1;
-            }
-            return 0;
-          });
-          break;
-        case 'count-up':
-          newData = endData.sort((a, b) => Number(a.count) - Number(b.count));
-          break;
-        case 'count-down':
-          newData = endData.sort((a, b) => Number(b.count) - Number(a.count));
-          break;
-        default:
-          break;
-      }
-
-      toysRoot.innerHTML = '';
-      renderToys(newData, toysRoot);
-    });
 
     filterFavourite.addEventListener('input', () => {
-      const newData = endData.filter((item) => item.favorite === true);
+      filterOptions.favorite = !filterOptions.favorite ? true : null;
+
+      endData = filterData(filterOptions, data);
+      toysRoot.innerHTML = '';
+      renderToys(endData, toysRoot);
+    });
+
+    const filterShape = [...document.querySelectorAll('.shape-toggle')!];
+
+    filterShape.forEach((elem) => {
+      elem.addEventListener('input', () => {
+        filterOptions.shape[elem.id] = !filterOptions.shape[elem.id] ? true : null;
+
+        endData = filterData(filterOptions, data);
+        toysRoot.innerHTML = '';
+        renderToys(endData, toysRoot);
+      });
+    });
+
+    const filterSize = [...document.querySelectorAll('.size-toggle')!];
+
+    filterSize.forEach((elem) => {
+      elem.addEventListener('input', () => {
+        filterOptions.size[elem.id] = !filterOptions.size[elem.id] ? true : null;
+
+        endData = filterData(filterOptions, data);
+        toysRoot.innerHTML = '';
+        renderToys(endData, toysRoot);
+      });
+    });
+
+    const filterColor = [...document.querySelectorAll('.color-toggle')!];
+
+    filterColor.forEach((elem) => {
+      elem.addEventListener('input', () => {
+        filterOptions.color[elem.id] = !filterOptions.color[elem.id] ? true : null;
+
+        endData = filterData(filterOptions, data);
+        toysRoot.innerHTML = '';
+        renderToys(endData, toysRoot);
+      });
+    });
+
+    const resetFilters = document.querySelector('#reset-filter')!;
+
+    resetFilters.addEventListener('click', () => {
+      endData = data;
 
       toysRoot.innerHTML = '';
-      renderToys(newData, toysRoot);
+      toyShapeSvg.map((item) => item.classList.remove('size-svg_selected'));
+      toySizeSvg.map((item) => item.classList.remove('size-svg_selected'));
+      renderToys(endData, toysRoot);
     });
 
     renderToys(endData, toysRoot);

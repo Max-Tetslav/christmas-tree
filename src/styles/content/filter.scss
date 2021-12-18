@@ -230,7 +230,7 @@ fieldset{
   align-items: center;
 }
 
-.color{
+.color-toggle{
   height: 25px;
   width: 25px;
   -webkit-appearance: none;
@@ -261,23 +261,23 @@ fieldset{
   top: 0.2rem;
 }
 
-.color[name = 'white']{
+.color-toggle[name = 'white']{
   background: #ffffff;
 }
 
-.color[name = 'yellow']{
+.color-toggle[name = 'yellow']{
   background: #ece800;
 }
 
-.color[name = 'red']{
+.color-toggle[name = 'red']{
   background: #be0000;
 }
 
-.color[name = 'blue']{
+.color-toggle[name = 'blue']{
   background: #0041bb;
 }
 
-.color[name = 'green']{
+.color-toggle[name = 'green']{
   background: #047500;
 }
 

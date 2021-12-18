@@ -1,28 +1,16 @@
 export default interface Ifilter {
-  favorite?: boolean;
-  sort?: string;
-  shape?: {
-    bell?: boolean;
-    ball?: boolean;
-    pinecone?: boolean;
-    star?: boolean;
-    snowflake?: boolean;
-    figure?: boolean;
+  favorite: boolean | null;
+  shape: {
+    [key: string]: boolean | string | null;
   };
-  size?: {
-    big?: boolean;
-    medium?: boolean;
-    small?: boolean;
+  size: {
+    [key: string]: boolean | string | null;
   };
-  color?: {
-    white?: boolean;
-    yellow?: boolean;
-    red?: boolean;
-    blue?: boolean;
-    green?: boolean;
+  color: {
+    [key: string]: boolean | string | null;
   };
-  countRange?: string;
-  yearRange?: string;
+  countRange: string | null;
+  yearRange: string | null;
 
   render?(target: Element): void;
 }

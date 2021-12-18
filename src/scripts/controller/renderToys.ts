@@ -1,5 +1,5 @@
 import Toy from '../views/components/Toy';
-import ToyList from './ItoyList';
+import ToyList from '../interfaces/ItoyList';
 
 function renderToys(array: ToyList, target: Element) {
   const targetUpdated = target;
