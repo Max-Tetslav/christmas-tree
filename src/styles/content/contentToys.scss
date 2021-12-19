@@ -1,8 +1,11 @@
 @import './filter.scss';
 
 .content-root{
+  max-width: 1440px;
+  padding: 0 10px;
   display: flex;
   justify-content: space-around;
+  gap: 10px;
   height: 75vh;
   font-family: 'Caveat', cursive;
   font-size: 20px;
@@ -29,7 +32,7 @@
 .toys-root{
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   gap: 10px;
 }
 
