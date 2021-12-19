@@ -6,10 +6,15 @@ fieldset{
 
 .flex-fieldset{
   display: flex;
-  flex-direction: column;
   justify-content: space-around;
   align-items: center;
   gap: 5px;
+}
+
+@media (max-width: 1160px) {
+  .flex-fieldset{
+    flex-direction: column;
+  }
 }
 
 .filter-container{

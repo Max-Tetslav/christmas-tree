@@ -118,6 +118,20 @@ function filterData(options: Ifilter, data: ToyList) {
     newData = colorData;
   }
 
+  if (options.countRange) {
+    options.countRange = options.countRange.map((item) => Number(item));
+    newData.forEach((item) => item.count = Number(item.count));
+
+    newData = newData.filter((item) => item.count >= options.countRange![0] && item.count <= options.countRange![1]);
+  } 
+
+  if (options.yearRange) {
+    options.yearRange = options.yearRange.map((item) => Number(item));
+    newData.forEach((item) => item.year = Number(item.year));
+
+    newData = newData.filter((item) => item.year >= options.yearRange![0] && item.year <= options.yearRange![1]);
+  }
+
   sortToys(newData);
 
   return newData;

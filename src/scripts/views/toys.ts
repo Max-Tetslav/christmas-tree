@@ -230,6 +230,24 @@ const Toys = {
       });
     });
 
+    yearsRange.noUiSlider!.on('update', () => {
+      filterOptions.yearRange = yearsRange.noUiSlider!.get() as string[];
+
+      console.log(filterOptions);
+
+      endData = filterData(filterOptions, data);
+      toysRoot.innerHTML = '';
+      renderToys(endData, toysRoot);
+    });
+
+    countRange.noUiSlider!.on('update', () => {
+      filterOptions.countRange = countRange.noUiSlider!.get() as string[];
+
+      endData = filterData(filterOptions, data);
+      toysRoot.innerHTML = '';
+      renderToys(endData, toysRoot);
+    })
+
     const resetFilters = document.querySelector('#reset-filter')!;
 
     resetFilters.addEventListener('click', () => {

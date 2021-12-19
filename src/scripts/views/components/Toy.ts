@@ -1,7 +1,7 @@
 class Toy {
   color: string;
 
-  count: string;
+  count: string | number;
 
   favourite: boolean;
 
@@ -13,17 +13,17 @@ class Toy {
 
   size: string;
 
-  year: string;
+  year: string | number;
 
   constructor(
     color: string,
-    count: string,
+    count: string | number,
     favourite: boolean,
     name: string,
     num: string,
     shape: string,
     size: string,
-    year: string,
+    year: string | number,
   ) {
     this.color = color;
     this.count = count;

@@ -9,8 +9,8 @@ export default interface Ifilter {
   color: {
     [key: string]: boolean | string | null;
   };
-  countRange: string | null;
-  yearRange: string | null;
+  countRange: string[] | number[] | null;
+  yearRange: string[] | number[] | null;
 
   render?(target: Element): void;
 }

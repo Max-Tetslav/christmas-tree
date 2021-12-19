@@ -1,12 +1,12 @@
 interface Itoy {
   color: string;
-  count: string;
+  count: string | number;
   favorite: boolean;
   name: string;
   num: string;
   shape: string;
   size: string;
-  year: string;
+  year: string | number;
 }
 
 export default Itoy;
