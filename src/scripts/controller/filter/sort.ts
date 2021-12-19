@@ -35,10 +35,10 @@ function sortToys(data: ToyList) {
         });
         break;
       case 'count-up':
-        newData = endData.sort((a, b) => Number(a.count) - Number(b.count));
+        newData = endData.sort((a, b) => Number(a.year) - Number(b.year));
         break;
       case 'count-down':
-        newData = endData.sort((a, b) => Number(b.count) - Number(a.count));
+        newData = endData.sort((a, b) => Number(b.year) - Number(a.year));
         break;
       default:
         break;

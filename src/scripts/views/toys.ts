@@ -45,8 +45,8 @@ const Toys = {
           <select class="sort" name="sort" id="sort" >
             <option class="sort__item" value="name-up">По названию А-Я</option>
             <option class="sort__item" value="name-down">По названию Я-А</option>
-            <option class="sort__item" value="count-down">По убыванию экземпляров</option>
-            <option class="sort__item" value="count-up">По возрастанию экземпляров</option>
+            <option class="sort__item" value="count-down">По убыванию год покупки</option>
+            <option class="sort__item" value="count-up">По возрастанию год покупки</option>
           </select>
         </div>
       </fieldset>
