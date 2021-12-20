@@ -1,4 +1,4 @@
-interface Itoy {
+export default interface IToy {
   color: string;
   count: string | number;
   favorite: boolean;
@@ -8,5 +8,3 @@ interface Itoy {
   size: string;
   year: string | number;
 }
-
-export default Itoy;

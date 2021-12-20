@@ -1,6 +1,6 @@
 import noUiSlider, { target } from 'nouislider';
 
-function createSlider(targetEl: target, min: number, max: number, stepCount: number) {
+function createSlider(targetEl: target, min: number, max: number, stepCount: number): void {
   const input = targetEl;
 
   noUiSlider.create(input, {

@@ -75,7 +75,7 @@ fieldset{
 }
 
 .search-container__input-container__clear-search{
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -85,6 +85,10 @@ fieldset{
   height: 15px;
   right: 15px;
   cursor: pointer;
+}
+
+.search-container__input-container__clear-search_visible{
+  display: flex;
 }
 
 .search-container__input-container__clear-search::before{

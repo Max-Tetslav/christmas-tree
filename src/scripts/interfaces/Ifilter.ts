@@ -1,4 +1,5 @@
-export default interface Ifilter {
+export default interface IFilter {
+  name: string | null;
   favorite: boolean | null;
   shape: {
     [key: string]: boolean | string | null;

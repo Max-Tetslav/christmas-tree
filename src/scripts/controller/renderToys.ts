@@ -1,8 +1,8 @@
-import Toy from '../views/components/Toy';
-import ToyList from '../interfaces/ItoyList';
+import Toy from '../views/components/toy';
+import { IToyList } from '../interfaces/itoyList';
 
-function renderToys(array: ToyList, target: Element) {
-  const targetUpdated = target;
+function renderToys(array: IToyList, target: Element): void {
+  const targetUpdated: Element = target;
   array.map((item) => {
     const toy = new Toy(item.color, item.count, item.favorite, item.name, item.num, item.shape, item.size, item.year);
 
@@ -11,8 +11,8 @@ function renderToys(array: ToyList, target: Element) {
     return toy;
   });
 
-  const toys = document.querySelectorAll('.toy')!;
-  const favourites = document.querySelector('.favourites-text')!;
+  const toys: Element[] = [...document.querySelectorAll('.toy')!];
+  const favourites: Element = document.querySelector('.favourites-text')!;
 
   toys.forEach((toy) => {
     toy.addEventListener('click', () => {

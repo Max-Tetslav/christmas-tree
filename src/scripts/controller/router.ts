@@ -2,8 +2,8 @@ import Header from '../views/header';
 import Footer from '../views/footer';
 import Home from '../views/home';
 import Toys from '../views/toys';
-import Tree from '../views/Tree';
-import IView from '../interfaces/view';
+import Tree from '../views/tree';
+import IView from '../interfaces/iview';
 
 interface IRoutesList {
   [key: string]: IView;

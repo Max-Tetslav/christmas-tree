@@ -1,7 +1,7 @@
-import ToyList from '../../interfaces/ItoyList';
+import { IToyList } from '../../interfaces/itoyList';
 import renderToys from '../renderToys';
 
-function sortToys(data: ToyList) {
+function sortToys(data: IToyList): void {
   const toysRoot = document.querySelector('.toys-root')!;
   const sortInput: HTMLSelectElement = document.querySelector('.sort')!;
   const endData = data;
@@ -10,7 +10,7 @@ function sortToys(data: ToyList) {
     let selectedValue = sortInput.selectedOptions[0].value;
     selectedValue = sortInput.selectedOptions[0].value;
 
-    let newData: ToyList = endData;
+    let newData: IToyList = endData;
     switch (selectedValue) {
       case 'name-up':
         newData = endData.sort((a, b) => {

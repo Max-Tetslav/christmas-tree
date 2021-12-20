@@ -1,5 +1,3 @@
-import Itoy from './Itoy';
+import IToy from './itoy';
 
-type ToyList = Array<Itoy>;
-
-export default ToyList;
+export type IToyList = Array<IToy>;
