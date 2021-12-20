@@ -133,7 +133,7 @@ function filterData(options: IFilter, data: IToyList) {
   }
 
   if ( Boolean(options.name) ){
-    newData = newData.filter((item) => item.name.includes(options.name!));
+    newData = newData.filter((item) => item.name.toLowerCase().includes(options.name!.toLowerCase()));
   }
 
   sortToys(newData);
