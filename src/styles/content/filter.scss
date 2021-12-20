@@ -17,6 +17,10 @@ fieldset{
   }
 }
 
+.checkpoint::before{
+  display: none;
+}
+
 .filter-container{
   display: flex;
   flex-direction: column;
@@ -128,8 +132,8 @@ fieldset{
 
 .favorite-label {
   display: inline-flex;
-  cursor: pointer;
   position: relative;
+  cursor: pointer;
 }
 
 .favorite-label > input:checked + span::before {
@@ -212,6 +216,16 @@ fieldset{
   box-shadow: none;
 }
 
+.shape-group{
+  display: flex;
+}
+
+.shape-name{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
 
 .shape-toggle{
   display: none;

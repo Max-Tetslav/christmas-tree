@@ -119,20 +119,26 @@ function filterData(options: IFilter, data: IToyList) {
   }
 
   if (options.countRange) {
-    options.countRange = options.countRange.map((item) => Number(item));
-    newData.forEach((item) => item.count = Number(item.count));
+    options.countRange = options.countRange.map((item) => {
+      return Number(item);
+    });
+    newData.forEach((item) => {
+      item.count = Number(item.count);
+    });
 
     newData = newData.filter((item) => item.count >= options.countRange![0] && item.count <= options.countRange![1]);
-  } 
+  }
 
   if (options.yearRange) {
     options.yearRange = options.yearRange.map((item) => Number(item));
-    newData.forEach((item) => item.year = Number(item.year));
+    newData.forEach((item) => {
+      item.year = Number(item.year);
+    });
 
     newData = newData.filter((item) => item.year >= options.yearRange![0] && item.year <= options.yearRange![1]);
   }
 
-  if ( Boolean(options.name) ){
+  if (options.name) {
     newData = newData.filter((item) => item.name.toLowerCase().includes(options.name!.toLowerCase()));
   }
 
