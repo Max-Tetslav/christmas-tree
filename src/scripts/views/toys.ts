@@ -1,9 +1,9 @@
-import noUiSlider, { target } from 'nouislider';
+import { target } from 'nouislider';
 import Data from '../controller/loader';
 import renderToys from '../controller/renderToys';
-import ToyList from '../interfaces/ItoyList';
-import Ifilter from '../interfaces/Ifilter';
-import createSlider from './components/UiSlider';
+import { IToyList } from '../interfaces/itoyList';
+import IFilter from '../interfaces/ifilter';
+import createSlider from './components/uiSlider';
 import cone from './components/svg/cone';
 import snowflake from './components/svg/snowflake';
 import bell from './components/svg/bell';
@@ -16,7 +16,7 @@ import sortToys from '../controller/filter/sort';
 const Toys = {
   render: async () => {
     const view = `
-    <form class="filter-container" action="#">
+    <form class="filter-container" action="#" autocomplete="off">
       <div class="favourites-container">
       <span class="favourites-text">0</span>
       ${favourites}
@@ -25,9 +25,9 @@ const Toys = {
         <button class="soundToggle" type="button"></button>
         <div class="search-container">
           <div class="search-container__input-container">
-            <input class="search-container__input-container__search" type="text" placeholder="Поиск" autocomplete="off" autocorrect="off" name="search" id="search">
+            <input class="search-container__input-container__search" id="search-input" type="text" placeholder="Поиск" autofocus autocomplete="off" autocorrect="off" name="search" id="search">
           </div>
-          <span class="search-container__input-container__clear-search"></span>
+          <span class="search-container__input-container__clear-search" id="clear-search"></span>
         </div>
       </fieldset>
       <fieldset class="filter-container__favourite flex-fieldset">
@@ -152,8 +152,8 @@ const Toys = {
     createSlider(yearsRange, 1940, 2021, 10);
     createSlider(countRange, 1, 12, 1);
 
-    const data: ToyList = await Data.getData('./assets/data.json');
-    let endData: ToyList = data;
+    const data: IToyList = await Data.getData('./assets/data.json');
+    let endData: IToyList = data;
     const toysRoot = document.querySelector('.toys-root')!;
 
     // TODO переделать для инпутов ===================================
@@ -174,7 +174,8 @@ const Toys = {
 
     sortToys(endData);
 
-    const defaultFilters: Ifilter = {
+    const defaultFilters: IFilter = {
+      name: null,
       favorite: null,
       shape: {},
       size: {},
@@ -182,9 +183,10 @@ const Toys = {
       countRange: null,
       yearRange: null,
     };
-    const filterOptions: Ifilter = defaultFilters;
 
-    const filterFavourite = document.querySelector('.favorite')!;
+    const filterOptions: IFilter = defaultFilters;
+
+    const filterFavourite: Element = document.querySelector('.favorite')!;
 
     filterFavourite.addEventListener('input', () => {
       filterOptions.favorite = !filterOptions.favorite ? true : null;
@@ -233,8 +235,6 @@ const Toys = {
     yearsRange.noUiSlider!.on('update', () => {
       filterOptions.yearRange = yearsRange.noUiSlider!.get() as string[];
 
-      console.log(filterOptions);
-
       endData = filterData(filterOptions, data);
       toysRoot.innerHTML = '';
       renderToys(endData, toysRoot);
@@ -246,7 +246,7 @@ const Toys = {
       endData = filterData(filterOptions, data);
       toysRoot.innerHTML = '';
       renderToys(endData, toysRoot);
-    })
+    });
 
     const resetFilters = document.querySelector('#reset-filter')!;
 
@@ -260,6 +260,26 @@ const Toys = {
     });
 
     renderToys(endData, toysRoot);
+
+    const clearSearch = document.querySelector('#clear-search')!;
+    const searchInput: HTMLInputElement = document.querySelector('#search-input')!;
+    searchInput.addEventListener('input', () => {
+      clearSearch.classList.add('search-container__input-container__clear-search_visible');
+
+      filterOptions.name = searchInput.value;
+      endData = filterData(filterOptions, data);
+      toysRoot.innerHTML = '';
+      renderToys(endData, toysRoot);
+    });
+    clearSearch.addEventListener('click', () => {
+      searchInput.value = '';
+      clearSearch.classList.remove('search-container__input-container__clear-search_visible');
+
+      filterOptions.name = searchInput.value;
+      endData = filterData(filterOptions, data);
+      toysRoot.innerHTML = '';
+      renderToys(endData, toysRoot);
+    });
   },
 };
 

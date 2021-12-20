@@ -1,9 +1,9 @@
-import Ifilter from '../../interfaces/Ifilter';
-import Itoy from '../../interfaces/Itoy';
-import ToyList from '../../interfaces/ItoyList';
+import IFilter from '../../interfaces/ifilter';
+import IToy from '../../interfaces/itoy';
+import { IToyList } from '../../interfaces/itoyList';
 import sortToys from './sort';
 
-function filterData(options: Ifilter, data: ToyList) {
+function filterData(options: IFilter, data: IToyList) {
   let newData = data;
 
   if (options.favorite) {
@@ -36,7 +36,7 @@ function filterData(options: Ifilter, data: ToyList) {
           break;
       }
     });
-    let shapeData: Array<Itoy> = [];
+    let shapeData: Array<IToy> = [];
 
     if (translatedValues.length === 0) {
       shapeData = newData;
@@ -68,7 +68,7 @@ function filterData(options: Ifilter, data: ToyList) {
       }
     });
 
-    let sizeData: Array<Itoy> = [];
+    let sizeData: Array<IToy> = [];
 
     if (translatedValues.length === 0) {
       sizeData = newData;
@@ -105,7 +105,7 @@ function filterData(options: Ifilter, data: ToyList) {
           break;
       }
     });
-    let colorData: Array<Itoy> = [];
+    let colorData: Array<IToy> = [];
 
     if (translatedValues.length === 0) {
       colorData = newData;
@@ -130,6 +130,10 @@ function filterData(options: Ifilter, data: ToyList) {
     newData.forEach((item) => item.year = Number(item.year));
 
     newData = newData.filter((item) => item.year >= options.yearRange![0] && item.year <= options.yearRange![1]);
+  }
+
+  if ( Boolean(options.name) ){
+    newData = newData.filter((item) => item.name.includes(options.name!));
   }
 
   sortToys(newData);
