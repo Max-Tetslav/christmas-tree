@@ -1,0 +1,46 @@
+.footer-root{
+  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,1) 100%);
+}
+
+.footer{
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1440px;
+  height: 80px;
+}
+
+.footer__link{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.author-container{
+  display: flex;
+  gap: 10px;
+  max-width: 350px;
+  height: 50px;
+}
+
+.author-container__nickname{
+  color: #ffffff;
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+}
+
+.github-logo{
+  object-fit: cover;
+  width: 27px;
+  height: 27px;
+}
+
+.rss-logo{
+  object-fit: cover;
+  width: 73px;
+  height: 27px;
+}
+
+
