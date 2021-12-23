@@ -22,9 +22,23 @@ function renderToys(array: IToyList, target: Element): void {
 
   const toys: Element[] = [...document.querySelectorAll('.toy')!];
   const favourites: Element = document.querySelector('.favourites-text')!;
-
+  let favoritesToyList: number[] = sessionStorage.getItem('favorites')
+    ? sessionStorage
+        .getItem('favorites')!
+        .split('')
+        .map((item) => Number(item))
+    : [];
   toys.forEach((toy) => {
     toy.addEventListener('click', () => {
+      if (!favoritesToyList.includes(Number(toy.id.split('-')[1]))) {
+        favoritesToyList.push(Number(toy.id.split('-')[1]));
+      } else {
+        favoritesToyList = favoritesToyList.filter((item) => {
+          return item !== Number(toy.id.split('-')[1]);
+        });
+      }
+      sessionStorage.setItem('favorites', favoritesToyList.join(''));
+      console.log(favoritesToyList);
       if (Number(favourites.innerHTML) === 20) {
         if (toy.classList.contains('toy_favorite')) {
           toy.classList.remove('toy_favorite');

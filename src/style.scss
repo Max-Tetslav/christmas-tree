@@ -2,6 +2,7 @@
 @import url('./styles/header/header.scss');
 @import url('./styles/content/contentHome.scss');
 @import url('./styles/content/contentToys.scss');
+@import url('./styles/content/contentTree.scss');
 @import url('./styles/footer/footer.scss');
 
 * {
@@ -51,4 +52,8 @@ h4{
 
 .root__container{
   width: 100vw;
+}
+
+.hide{
+  display: none;
 }

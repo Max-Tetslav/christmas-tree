@@ -37,7 +37,7 @@ class Toy {
 
   render() {
     return `
-    <div class="toy">
+    <div class="toy" id="toy-${this.num}">
       <h3 class="toy__name toy-root">${this.name}</h3>
       <img class="toy__img" src="./assets/toys/${this.num}.png" alt="toy-${this.num}">
       <p class="toy__quantity">Колличество:
