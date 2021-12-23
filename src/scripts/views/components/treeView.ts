@@ -5,11 +5,11 @@ const treeView = `
   <aside class="aside-container">
     <fieldset class="settings">
       <legend class="hide">Настройки</legend>
-      <label class="settings__toggle">
+      <label class="music-label settings__toggle">
         <input class="music-toggle hide" type="checkbox">
         ${settings}
       </label>
-      <label class="settings__toggle">
+      <label class="snowfall-label settings__toggle">
         <input class="snowfall-toggle hide" type="checkbox">
         ${snowfall}
       </label>

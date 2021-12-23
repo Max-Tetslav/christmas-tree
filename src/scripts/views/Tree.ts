@@ -10,6 +10,7 @@ const Tree = {
     Tree.renderFavotitesList();
     Tree.setBackground();
     Tree.setTree();
+    Tree.playMusic();
   },
   renderFavotitesList: () => {
     let favoritesToyList: number[] = [];
@@ -49,6 +50,22 @@ const Tree = {
 
         treeRoot.innerHTML = treeImg;
       });
+    });
+  },
+  playMusic: () => {
+    const audio = new Audio('../../assets/audio/audio.mp3');
+    audio.volume = 0.3;
+    const musicToggle = document.querySelector('.music-toggle')!;
+    const musicSvg = document.querySelector('.music-svg')!;
+
+    musicToggle.addEventListener('input', () => {
+      if (audio.paused) {
+        audio.play();
+        musicSvg.classList.add('music-svg_active');
+      } else {
+        audio.pause();
+        musicSvg.classList.remove('music-svg_active');
+      }
     });
   },
 };

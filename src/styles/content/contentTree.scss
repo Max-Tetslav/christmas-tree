@@ -38,6 +38,14 @@
   height: 100%;
 }
 
+.music-label:hover .music-svg{
+  fill: gold;
+}
+
+.music-svg_active{
+  fill: gold;
+}
+
 .light-toggle{
   width: 40px;
   height: 20px;
