@@ -45,66 +45,7 @@ const treeView = `
     <fieldset class="lights-container">
       <legend class="hide">Игрушки</legend>
       <h2 class="settings-container__title">Игрушки</h2>
-      <label class="toy-toggle">
-        <input class="hide" id="tree-1" type="radio" name="tree">
-      </label>
-      <label class="toy-toggle">
-        <input class="hide" id="tree-2" type="radio" name="tree">
-      </label>
-      <label class="toy-toggle">
-      <input class="hide" id="tree-3" type="radio" name="tree">
-      </label>
-      <label class="toy-toggle">
-        <input class="hide" id="tree-4" type="radio" name="tree">
-      </label>
-      <label class="toy-toggle">
-        <input class="hide" id="tree-1" type="radio" name="tree">
-      </label>
-      <label class="toy-toggle">
-        <input class="hide" id="tree-2" type="radio" name="tree">
-      </label>
-      <label class="toy-toggle">
-        <input class="hide" id="tree-3" type="radio" name="tree">
-      </label>
-      <label class="toy-toggle">
-        <input class="hide" id="tree-4" type="radio" name="tree">
-      </label>
-      <label class="toy-toggle">
-        <input class="hide" id="tree-1" type="radio" name="tree">
-      </label>
-      <label class="toy-toggle">
-        <input class="hide" id="tree-2" type="radio" name="tree">
-      </label>
-      <label class="toy-toggle">
-        <input class="hide" id="tree-3" type="radio" name="tree">
-      </label>
-      <label class="toy-toggle">
-        <input class="hide" id="tree-4" type="radio" name="tree">
-      </label>
-      <label class="toy-toggle">
-        <input class="hide" id="tree-1" type="radio" name="tree">
-      </label>
-      <label class="toy-toggle">
-        <input class="hide" id="tree-2" type="radio" name="tree">
-      </label>
-      <label class="toy-toggle">
-        <input class="hide" id="tree-3" type="radio" name="tree">
-      </label>
-      <label class="toy-toggle">
-        <input class="hide" id="tree-4" type="radio" name="tree">
-      </label>
-      <label class="toy-toggle">
-        <input class="hide" id="tree-1" type="radio" name="tree">
-      </label>
-      <label class="toy-toggle">
-        <input class="hide" id="tree-2" type="radio" name="tree">
-      </label>
-      <label class="toy-toggle">
-      <input class="hide" id="tree-3" type="radio" name="tree">
-      </label>
-      <label class="toy-toggle">
-        <input class="hide" id="tree-4" type="radio" name="tree">
-      </label>
+      <div class="favorites-root"></div>
     </fieldset>
     <fieldset class="lights-container">
       <legend class="hide">Фон</legend>
@@ -136,7 +77,7 @@ const treeView = `
     </fieldset>
   </aside>
   <section class="tree-container">
-    <img class="tree" src="../../../assets/tree/0.png"/>
+    <img class="tree" src="../../../assets/tree/0.png" draggable="false"/>
   </section>
 `;
 

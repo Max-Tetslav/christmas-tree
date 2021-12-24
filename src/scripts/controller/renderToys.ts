@@ -1,5 +1,6 @@
 import Toy from '../views/components/toy';
 import { IToyList } from '../interfaces/itoyList';
+import IToy from '../interfaces/itoy';
 
 function renderToys(array: IToyList, target: Element): void {
   const targetUpdated: Element = target;
@@ -22,27 +23,35 @@ function renderToys(array: IToyList, target: Element): void {
 
   const toys: Element[] = [...document.querySelectorAll('.toy')!];
   const favourites: Element = document.querySelector('.favourites-text')!;
+  favourites.innerHTML = JSON.parse(sessionStorage.getItem('favorites') || '[]').length
+    ? JSON.parse(sessionStorage.getItem('favorites') || '[]').length
+    : 0;
   let favoritesToyList: number[] = sessionStorage.getItem('favorites')
-    ? sessionStorage
-        .getItem('favorites')!
-        .split('')
-        .map((item) => Number(item))
+    ? JSON.parse(sessionStorage.getItem('favorites') || '[]')
     : [];
-  toys.forEach((toy) => {
+    console.log(favoritesToyList);
+  toys.forEach((toy, index) => {
+    if(favoritesToyList.includes(Number(toy.id.split('-')[1]) - 1)){
+      toy.classList.add('toy_favorite');
+    }
     toy.addEventListener('click', () => {
-      if (!favoritesToyList.includes(Number(toy.id.split('-')[1]))) {
-        favoritesToyList.push(Number(toy.id.split('-')[1]));
+      if (!favoritesToyList.includes(Number(toy.id.split('-')[1]) - 1)) {
+        if(favoritesToyList.length < 20){
+          favoritesToyList.push(Number(toy.id.split('-')[1]) - 1);
+        }
       } else {
         favoritesToyList = favoritesToyList.filter((item) => {
-          return item !== Number(toy.id.split('-')[1]);
+          return item !== Number(toy.id.split('-')[1]) - 1;
         });
       }
-      sessionStorage.setItem('favorites', favoritesToyList.join(''));
+      sessionStorage.setItem('favorites', JSON.stringify(favoritesToyList));
       console.log(favoritesToyList);
+    console.log(JSON.parse(sessionStorage.getItem('favorites') || '[]') );
+
       if (Number(favourites.innerHTML) === 20) {
         if (toy.classList.contains('toy_favorite')) {
           toy.classList.remove('toy_favorite');
-          favourites.innerHTML = String(Number(favourites.innerHTML) - 1);
+          favourites.innerHTML = JSON.parse(sessionStorage.getItem('favorites') || '[]').length;
         } else {
           const closeAlert = document.querySelector('.favoritesAlert-overlay__container__btn')!;
           const overlay = document.querySelector('.favoritesAlert-overlay')!;
@@ -54,10 +63,10 @@ function renderToys(array: IToyList, target: Element): void {
       } else if (Number(favourites.innerHTML) < 20) {
         if (!toy.classList.contains('toy_favorite')) {
           toy.classList.add('toy_favorite');
-          favourites.innerHTML = String(Number(favourites.innerHTML) + 1);
+          favourites.innerHTML = JSON.parse(sessionStorage.getItem('favorites') || '[]').length;
         } else {
           toy.classList.remove('toy_favorite');
-          favourites.innerHTML = String(Number(favourites.innerHTML) - 1);
+          favourites.innerHTML = JSON.parse(sessionStorage.getItem('favorites') || '[]').length;
         }
       }
     });

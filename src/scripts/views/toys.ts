@@ -15,6 +15,7 @@ const Toys = {
     return view;
   },
   after_render: async () => {
+    console.log(sessionStorage.getItem('favorites')?.length);
     const yearsRange: target = document.querySelector('#year-range')!;
     const countRange: target = document.querySelector('#count-range')!;
 
@@ -136,7 +137,8 @@ const Toys = {
       toySizeSvg.map((item) => item.classList.remove('size-svg_selected'));
       renderToys(endData, toysRoot);
     });
-
+    
+    toysRoot.innerHTML = '';
     renderToys(endData, toysRoot);
 
     searchInput.addEventListener('input', () => {

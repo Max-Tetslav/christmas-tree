@@ -1,4 +1,8 @@
 import treeView from './components/treeView';
+import Data from '../controller/loader';
+import { IToyList } from '../interfaces/itoyList';
+import FavoriteToy from './components/favoriteToy';
+import IToy from '../interfaces/itoy';
 
 const Tree = {
   render: async () => {
@@ -6,30 +10,38 @@ const Tree = {
 
     return view;
   },
-  after_render: async () => {
-    Tree.renderFavotitesList();
+  after_render: async (): Promise<void> => {
+    console.log(JSON.parse(sessionStorage.getItem('favorites') || '[]'));
+    const toys: IToyList = await Data.getData('./assets/data.json');
+    Tree.renderFavotitesList(toys);
     Tree.setBackground();
     Tree.setTree();
     Tree.playMusic();
   },
-  renderFavotitesList: () => {
-    let favoritesToyList: number[] = [];
+  renderFavotitesList: (toys: IToyList): void => {
+    const data = toys;
+    console.log(data[0]);
+    let favoritesToyList: number[] = sessionStorage.getItem('favorites')
+      ? JSON.parse(sessionStorage.getItem('favorites') || '[]')
+      : [];
 
-    if (sessionStorage.getItem('favorites')) {
-      favoritesToyList = sessionStorage
-        .getItem('favorites')!
-        .split('')
-        .map((item) => {
-          return Number(item);
-        });
-    } else {
-      for (let i = 1; i <= 20; i += 1) {
+
+    if (!JSON.parse(sessionStorage.getItem('favorites') || '[]').length) {
+      for (let i = 0; i < 20; i += 1) {
         favoritesToyList.push(i);
       }
     }
-    console.log(favoritesToyList);
+    console.log(JSON.parse(sessionStorage.getItem('favorites') || '[]').length);
+    const favoritesRoot = document.querySelector('.favorites-root')!;
+    // const favoriteCount = document.querySelectorAll('.favorite')!;
+
+    favoritesToyList.forEach((favorite, index) => {
+      const favoriteToy = new FavoriteToy(data[favorite].num, data[index].count)
+      favoritesRoot.innerHTML += favoriteToy.render();
+    });
+
   },
-  setBackground: () => {
+  setBackground: (): void => {
     const backgroundList = [...document.querySelectorAll('.background-toggle')!];
 
     backgroundList.forEach((background, index) => {
@@ -40,19 +52,19 @@ const Tree = {
       });
     });
   },
-  setTree: () => {
+  setTree: (): void => {
     const treeList = [...document.querySelectorAll('.tree-toggle')!];
 
     treeList.forEach((tree, index) => {
       tree.addEventListener('input', () => {
         const treeRoot: HTMLElement = document.querySelector('.tree-container')!;
-        const treeImg = `<img class="tree" src="../../../assets/tree/${index}.png"/>`;
+        const treeImg = `<img class="tree" src="../../../assets/tree/${index}.png" draggable="false"/>`;
 
         treeRoot.innerHTML = treeImg;
       });
     });
   },
-  playMusic: () => {
+  playMusic: (): void => {
     const audio = new Audio('../../assets/audio/audio.mp3');
     audio.volume = 0.3;
     const musicToggle = document.querySelector('.music-toggle')!;

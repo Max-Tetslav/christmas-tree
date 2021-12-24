@@ -122,13 +122,42 @@
   background-image: url('../../assets/tree/3.png');
 }
 
+.favorites-root{
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 5px 0px;
+}
+
+.favorite-count{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.favorite-img{
+  position: absolute;
+  width: 65px;
+  bottom: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  cursor: grab;
+}
+
 .toy-toggle{
   display: inline-block;
+  position: relative;
   width: 23.9%;
   height: 80px;
   border: 1px solid white;
   border-radius: 20px;
-  background-image: url('../../assets/toys/30.png');
   background-position: center;
   background-size: 50%;
   background-repeat: no-repeat;
@@ -158,9 +187,8 @@
   left: 0;
   right: 0;
   text-align: center;
-
-  
 }
+
 @media screen and (min-width: 840px) {
   .tree{
     width: 90%;
