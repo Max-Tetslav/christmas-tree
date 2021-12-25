@@ -218,3 +218,35 @@
     width: 55%;
   }
 }
+
+
+@keyframes fall {
+  to {
+    transform: translateY(105vh);
+	}
+}
+
+@keyframes rollin {
+  from {
+    transform: rotate(0deg);
+  }
+	to {
+    transform: rotate(360deg);
+	}
+}
+  .fa-snowflake {
+    color: #fff;
+    top: -20px;
+    position: absolute;
+    animation: fall 12s forwards;
+  }
+  
+  .fa-snowflake::after {
+    background-image: url('../../assets/svg/snow.svg');
+    background-size: 10px 10px;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    content: '';
+    animation: 4s linear 0s infinite alternate rollin;
+  }
