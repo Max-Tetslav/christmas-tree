@@ -1,15 +1,14 @@
 class FavoriteToy {
   count: string | number;
+
   num: string;
-  constructor(
-    num: string,
-    count: string | number,
-  ){
+
+  constructor(num: string, count: string | number) {
     this.count = count;
     this.num = num;
   }
-  
-  render(){
+
+  render() {
     return `
       <div class="toy-toggle">
         <img class="favorite-img" src="../../../assets/toys/${this.num}.png">
