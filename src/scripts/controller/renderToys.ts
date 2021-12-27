@@ -1,6 +1,5 @@
 import Toy from '../views/components/toy';
 import { IToyList } from '../interfaces/itoyList';
-import IToy from '../interfaces/itoy';
 
 function renderToys(array: IToyList, target: Element): void {
   const targetUpdated: Element = target;
@@ -29,14 +28,13 @@ function renderToys(array: IToyList, target: Element): void {
   let favoritesToyList: number[] = sessionStorage.getItem('favorites')
     ? JSON.parse(sessionStorage.getItem('favorites') || '[]')
     : [];
-    console.log(favoritesToyList);
-  toys.forEach((toy, index) => {
-    if(favoritesToyList.includes(Number(toy.id.split('-')[1]) - 1)){
+  toys.forEach((toy) => {
+    if (favoritesToyList.includes(Number(toy.id.split('-')[1]) - 1)) {
       toy.classList.add('toy_favorite');
     }
     toy.addEventListener('click', () => {
       if (!favoritesToyList.includes(Number(toy.id.split('-')[1]) - 1)) {
-        if(favoritesToyList.length < 20){
+        if (favoritesToyList.length < 20) {
           favoritesToyList.push(Number(toy.id.split('-')[1]) - 1);
         }
       } else {
@@ -45,8 +43,6 @@ function renderToys(array: IToyList, target: Element): void {
         });
       }
       sessionStorage.setItem('favorites', JSON.stringify(favoritesToyList));
-      console.log(favoritesToyList);
-    console.log(JSON.parse(sessionStorage.getItem('favorites') || '[]') );
 
       if (Number(favourites.innerHTML) === 20) {
         if (toy.classList.contains('toy_favorite')) {

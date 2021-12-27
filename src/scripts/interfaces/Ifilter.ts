@@ -12,6 +12,4 @@ export default interface IFilter {
   };
   countRange: string[] | number[] | null;
   yearRange: string[] | number[] | null;
-
-  render?(target: Element): void;
 }

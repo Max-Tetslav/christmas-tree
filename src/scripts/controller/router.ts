@@ -29,16 +29,16 @@ const Router = async () => {
   const footerRoot = document.querySelector('.footer-root')!;
 
   headerRoot.innerHTML = await Header.render();
-  await Header.after_render();
+  await Header.afterRender();
   footerRoot.innerHTML = await Footer.render();
-  await Footer.after_render();
+  await Footer.afterRender();
 
   const url = locationURL.getURL();
 
   const page: IView = routes[url];
 
   contentRoot.innerHTML = await page.render();
-  await page.after_render();
+  await page.afterRender();
 };
 
 export default Router;

@@ -9,27 +9,26 @@ import filterData from '../controller/filter/filterToys';
 import sortToys from '../controller/filter/sort';
 
 const Toys = {
-  render: async () => {
-    const view = `${toysView}`;
+  render: async (): Promise<string> => {
+    const view: string = `${toysView}`;
 
     return view;
   },
-  after_render: async () => {
-    console.log(sessionStorage.getItem('favorites')?.length);
-    const yearsRange: target = document.querySelector('#year-range')!;
-    const countRange: target = document.querySelector('#count-range')!;
+  afterRender: async (): Promise<void> => {
+    const yearsRange: target = document.querySelector('#year-range')! as target;
+    const countRange: target = document.querySelector('#count-range')! as target;
 
     createSlider(yearsRange, 1940, 2021, 10);
     createSlider(countRange, 1, 12, 1);
 
     const data: IToyList = await Data.getData('./assets/data.json');
     let endData: IToyList = data;
-    const toysRoot = document.querySelector('.toys-root')!;
+    const toysRoot: HTMLElement = document.querySelector('.toys-root')! as HTMLElement;
 
-    const toySizeSvg = [...document.querySelectorAll('.size-svg')!];
-    const toyShapeSvg = [...document.querySelectorAll('.shape-svg')!];
-    const toySizeInputs = [...document.querySelectorAll('.size-toggle')!];
-    const toyShapeInputs = [...document.querySelectorAll('.shape-toggle')!];
+    const toySizeSvg: HTMLElement[] = [...document.querySelectorAll('.size-svg')!] as HTMLElement[];
+    const toyShapeSvg: HTMLElement[] = [...document.querySelectorAll('.shape-svg')!] as HTMLElement[];
+    const toySizeInputs: HTMLElement[] = [...document.querySelectorAll('.size-toggle')!] as HTMLElement[];
+    const toyShapeInputs: HTMLElement[] = [...document.querySelectorAll('.shape-toggle')!] as HTMLElement[];
 
     toySizeInputs.map((item, index) =>
       item.addEventListener('click', () => {
@@ -56,17 +55,17 @@ const Toys = {
 
     const filterOptions: IFilter = defaultFilters;
 
-    const filterFavourite: Element = document.querySelector('.favorite')!;
+    const filterFavourite: HTMLElement = document.querySelector('.favorite')! as HTMLElement;
 
     filterFavourite.addEventListener('input', () => {
-      filterOptions.favorite = !filterOptions.favorite ? true : null;
+      filterOptions.favorite = filterOptions.favorite ? true : null;
 
       endData = filterData(filterOptions, data);
       toysRoot.innerHTML = '';
       renderToys(endData, toysRoot);
     });
 
-    const filterShape = [...document.querySelectorAll('.shape-toggle')!];
+    const filterShape: HTMLElement[] = [...document.querySelectorAll('.shape-toggle')!] as HTMLElement[];
 
     filterShape.forEach((elem) => {
       elem.addEventListener('input', () => {
@@ -78,7 +77,7 @@ const Toys = {
       });
     });
 
-    const filterSize = [...document.querySelectorAll('.size-toggle')!];
+    const filterSize: HTMLElement[] = [...document.querySelectorAll('.size-toggle')!] as HTMLElement[];
 
     filterSize.forEach((elem) => {
       elem.addEventListener('input', () => {
@@ -90,7 +89,7 @@ const Toys = {
       });
     });
 
-    const filterColor = [...document.querySelectorAll('.color-toggle')!];
+    const filterColor: HTMLElement[] = [...document.querySelectorAll('.color-toggle')!] as HTMLElement[];
 
     filterColor.forEach((elem) => {
       elem.addEventListener('input', () => {
@@ -118,12 +117,12 @@ const Toys = {
       renderToys(endData, toysRoot);
     });
 
-    const resetFilters = document.querySelector('#reset-filter')!;
-    const clearSearch = document.querySelector('#clear-search')!;
-    const searchInput: HTMLInputElement = document.querySelector('#search-input')!;
+    const resetFilters: HTMLElement = document.querySelector('#reset-filter')! as HTMLElement;
+    const clearSearch: HTMLElement = document.querySelector('#clear-search')! as HTMLElement;
+    const searchInput: HTMLInputElement = document.querySelector('#search-input')! as HTMLInputElement;
 
     resetFilters.addEventListener('click', () => {
-      const allInputs = <HTMLElement[]>[...document.querySelectorAll('input[type="checkbox"]:checked')!];
+      const allInputs: HTMLElement[] = [...document.querySelectorAll('input[type="checkbox"]:checked')!] as HTMLElement[];
 
       yearsRange.noUiSlider!.set([1940, 2021]);
       countRange.noUiSlider!.set([1, 12]);
@@ -137,7 +136,7 @@ const Toys = {
       toySizeSvg.map((item) => item.classList.remove('size-svg_selected'));
       renderToys(endData, toysRoot);
     });
-    
+
     toysRoot.innerHTML = '';
     renderToys(endData, toysRoot);
 

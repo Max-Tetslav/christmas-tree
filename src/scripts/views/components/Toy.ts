@@ -1,9 +1,11 @@
-class Toy {
+import IToy from '../../interfaces/itoy';
+
+class Toy implements IToy {
   color: string;
 
   count: string | number;
 
-  favourite: boolean;
+  favorite: boolean;
 
   name: string;
 
@@ -18,7 +20,7 @@ class Toy {
   constructor(
     color: string,
     count: string | number,
-    favourite: boolean,
+    favorite: boolean,
     name: string,
     num: string,
     shape: string,
@@ -27,7 +29,7 @@ class Toy {
   ) {
     this.color = color;
     this.count = count;
-    this.favourite = favourite;
+    this.favorite = favorite;
     this.name = name;
     this.num = num;
     this.shape = shape;
@@ -56,7 +58,7 @@ class Toy {
         <span class="toy__size-root toy-root">${this.size}</span>
       </p>
       <p class="toy__favourite">Любимая:
-        <span class="toy__favourite-root toy-root">${this.favourite ? 'Да' : 'Нет'}</span>
+        <span class="toy__favourite-root toy-root">${this.favorite ? 'Да' : 'Нет'}</span>
       </p>
     </div>
     `;

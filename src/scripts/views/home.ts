@@ -11,8 +11,8 @@ const Home = {
 
     return view;
   },
-  after_render: async () => {
-    const start = document.querySelector('.start-game')!;
+  afterRender: async () => {
+    const start: HTMLElement = document.querySelector('.start-game')! as HTMLElement;
 
     start.addEventListener('click', () => {
       window.location.hash = '/toys';

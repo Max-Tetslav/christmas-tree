@@ -8,9 +8,8 @@ import favourites from './svg/favourites';
 const toysView = `
   <form class="filter-container" action="#" autocomplete="off">
     <div class="favourites-container">
-    <span class="favourites-text">${sessionStorage.getItem('favorites') 
-      ? JSON.parse(sessionStorage.getItem('favorites') || '[]').length
-      : 0
+    <span class="favourites-text">${
+      sessionStorage.getItem('favorites') ? JSON.parse(sessionStorage.getItem('favorites') || '[]').length : 0
     }</span>
     ${favourites}
     </div>

@@ -1,3 +1,3 @@
 import IToy from './itoy';
 
-export type IToyList = Array<IToy>;
+export type IToyList = IToy[];

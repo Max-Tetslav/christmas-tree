@@ -14,7 +14,7 @@ const Footer = {
 
     return view;
   },
-  after_render: async () => {},
+  afterRender: async () => {},
 };
 
 export default Footer;
